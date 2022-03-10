@@ -8,4 +8,4 @@ inline fun <reified T : Any> KClass<T>.findImplementation(): KClass<out T> =
 		.filter { it.isConcreteClass }
 		.maxByOrNull { PriorityReflection.findValueByClass(it) }
 		?.kotlin
-		?: throw MissingImplementationException(this.java)
+		?: throw MissingImplementationException(this)

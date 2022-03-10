@@ -7,6 +7,7 @@ enum class ReflectionMessages(
 ) : Language {
 
 	MISSING_IMPLEMENTATION	("implementation not found for the target class"),
+	MISSING_EMPTY_CONSTRUCTOR	("implementation not found for the target class"),
 
 	;
 
