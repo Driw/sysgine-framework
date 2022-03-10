@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>br.com.driw.sysgine</groupId>
+	<artifactId>sysgine-framework</artifactId>
+	<version>0.1.0</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<!-- MAVEN -->
+		<maven.compiler.source>16</maven.compiler.source>
+		<maven.compiler.target>16</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!-- LANGUAGE -->
+		<java.version>16.0.1</java.version>
+		<kotlin.version>1.6.20-RC</kotlin.version>
+		<!-- OTHERS -->
+		<jackson.version>2.13.1</jackson.version>
+		<slf4j.version>2.0.0-alpha6</slf4j.version>
+		<sysgine.version>0.1.0</sysgine.version>
+		<!-- TESTS -->
+		<junit.jupiter.version>5.8.2</junit.jupiter.version>
+		<kotest.version>5.1.0</kotest.version>
+	</properties>
+
+	<name>Sysgine Framework</name>
+	<description>System engine framework able you to create a system with a lot of code resources</description>
+	<url>http://driw.com.br/sysgine-framework</url>
+
+	<organization>
+		<name>Sysgine Framework</name>
+		<url>https://driw.com.br</url>
+	</organization>
+
+	<issueManagement>
+		<system>Github</system>
+		<url>https://github.com/driw/sysgine-framework/issues</url>
+	</issueManagement>
+
+	<modules>
+		<module>sysgine-framework-test</module>
+		<module>sysgine-framework-common</module>
+		<module>sysgine-framework-reflection</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- KOTLIN -->
+
+			<dependency>
+				<groupId>org.jetbrains.kotlin</groupId>
+				<artifactId>kotlin-stdlib</artifactId>
+				<version>${kotlin.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jetbrains.kotlin</groupId>
+				<artifactId>kotlin-reflect</artifactId>
+				<version>${kotlin.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jetbrains.kotlin</groupId>
+				<artifactId>kotlin-stdlib-jdk8</artifactId>
+				<version>${kotlin.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jetbrains.kotlin</groupId>
+				<artifactId>kotlin-test</artifactId>
+				<version>${kotlin.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- TESTS -->
+
+			<!-- https://mvnrepository.com/artifact/io.mockk/mockk -->
+			<dependency>
+				<groupId>io.mockk</groupId>
+				<artifactId>mockk</artifactId>
+				<version>1.12.2</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<!-- QUALITY -->
+
+		<!-- https://mvnrepository.com/artifact/io.gitlab.arturbosch.detekt/detekt-formatting -->
+		<dependency>
+			<groupId>io.gitlab.arturbosch.detekt</groupId>
+			<artifactId>detekt-formatting</artifactId>
+			<version>1.19.0</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- TEST DEPENDENCIES -->
+
+		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.kotest/kotest-assertions-core-jvm -->
+		<dependency>
+			<groupId>io.kotest</groupId>
+			<artifactId>kotest-assertions-core-jvm</artifactId>
+			<version>${kotest.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.kotest/kotest-runner-junit5-jvm -->
+		<dependency>
+			<groupId>io.kotest</groupId>
+			<artifactId>kotest-runner-junit5-jvm</artifactId>
+			<version>${kotest.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<!-- PLUGIN MANAGEMENT -->
+
+		<pluginManagement>
+			<plugins>
+				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>3.0.0-M5</version>
+				</plugin>
+				<!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-maven-plugin -->
+				<plugin>
+					<groupId>org.jetbrains.kotlin</groupId>
+					<artifactId>kotlin-maven-plugin</artifactId>
+					<version>${kotlin.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>
