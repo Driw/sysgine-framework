@@ -14,11 +14,11 @@ class AnnotationReflectionTest : ShouldSpec() {
 
 		context("find types annotated") {
 			should("list nothing because anything is annotated by") {
-				TestNotAnnotated::class.findTypesAnnotated() shouldBe emptyList()
+				TestNotAnnotated::class.findTypes() shouldBe emptyList()
 			}
 
 			should("list any who is annotated or has a extension or implementation who has it") {
-				TestAnnotation::class.findTypesAnnotated() shouldContainExactlyInAnyOrder listOf(
+				TestAnnotation::class.findTypes() shouldContainExactlyInAnyOrder listOf(
 					ConcreteTest::class,
 					AnnotatedInterfaceTest::class,
 					ExtendedClassTest::class,
@@ -29,42 +29,51 @@ class AnnotationReflectionTest : ShouldSpec() {
 
 		context("find inheritances annotated") {
 			should("get nul because anyone is annotated with") {
-				TestNotAnnotated::class.findInheritancesAnnotated(ConcreteTest::class) shouldBe null
+				TestNotAnnotated::class.findInheritances(ConcreteTest::class) shouldBe null
 			}
 
 			should("get who exactly is annotated") {
-				TestAnnotation::class.findInheritancesAnnotated(ConcreteTest::class) shouldBe ConcreteTest::class
-				TestAnnotation::class.findInheritancesAnnotated(ExtendedClassTest::class) shouldBe ConcreteTest::class
-				TestAnnotation::class.findInheritancesAnnotated(AnnotatedInterfaceTest::class) shouldBe AnnotatedInterfaceTest::class
-				TestAnnotation::class.findInheritancesAnnotated(ExtendedAnnotatedInterfaceTest::class) shouldBe AnnotatedInterfaceTest::class
+				TestAnnotation::class.findInheritances(ConcreteTest::class) shouldBe ConcreteTest::class
+				TestAnnotation::class.findInheritances(ExtendedClassTest::class) shouldBe ConcreteTest::class
+				TestAnnotation::class.findInheritances(AnnotatedInterfaceTest::class) shouldBe AnnotatedInterfaceTest::class
+				TestAnnotation::class.findInheritances(ExtendedAnnotatedInterfaceTest::class) shouldBe AnnotatedInterfaceTest::class
 			}
 		}
 
 		context("find functions annotated") {
 			should("list functions who is annotated by") {
-				TestNotAnnotated::class.findFunctionsAnnotated()
+				TestNotAnnotated::class.findFunctions()
 					.map { it.name } shouldContainExactlyInAnyOrder listOf("methodNotAnnotated", "companionMethodNotAnnotated")
-				TestAnnotation::class.findFunctionsAnnotated()
+				TestAnnotation::class.findFunctions()
 					.map { it.name } shouldContainExactlyInAnyOrder listOf("methodString", "methodInt")
 			}
+
+			should("list target functions who is annotated by") {
+				TestNotAnnotated::class.findFunctions(TestMethods::class)
+					.map { it.name } shouldContainExactlyInAnyOrder listOf("methodNotAnnotated")
+				TestAnnotation::class.findFunctions(TestMethods::class)
+					.map { it.name } shouldContainExactlyInAnyOrder listOf("methodString", "methodInt")
+				TestNotAnnotated::class.findCompanionFunctions(TestMethods::class)
+					.map { it.name } shouldContainExactlyInAnyOrder listOf("companionMethodNotAnnotated")
+				TestAnnotation::class.findCompanionFunctions(TestMethods::class) shouldBe emptyList()
+			}
 		}
-	}
 
 		context("find properties annotated") {
 			should("list properties who is annotated by") {
-				TestNotAnnotated::class.findPropertiesAnnotated(TestProperty::class)
+				TestNotAnnotated::class.findProperties(TestProperty::class)
 					.map { it.name } shouldContainExactlyInAnyOrder listOf("nonRequiredProperty")
-				TestAnnotation::class.findPropertiesAnnotated(TestProperty::class)
+				TestAnnotation::class.findProperties(TestProperty::class)
 					.map { it.name } shouldContainExactlyInAnyOrder listOf("nonPrivateRequiredProperty")
-				TestNotAnnotated::class.findConstructorPropertiesAnnotated(TestProperty::class)
+				TestNotAnnotated::class.findConstructorProperties(TestProperty::class)
 					.map { it.name } shouldContainExactlyInAnyOrder listOf("requiredProperty")
-				TestAnnotation::class.findConstructorPropertiesAnnotated(TestProperty::class)
+				TestAnnotation::class.findConstructorProperties(TestProperty::class)
 					.map { it.name } shouldContainExactlyInAnyOrder listOf("requiredPrivateProperty")
-				TestNotAnnotated::class.findCompanionPropertiesAnnotated(TestProperty::class)
+				TestNotAnnotated::class.findCompanionProperties(TestProperty::class)
 					.map { it.name } shouldContainExactlyInAnyOrder listOf("companionObjectProperty")
-				TestAnnotation::class.findCompanionPropertiesAnnotated(TestProperty::class)
+				TestAnnotation::class.findCompanionProperties(TestProperty::class)
 					.map { it.name } shouldContainExactlyInAnyOrder listOf("privateCompanionObjectProperty")
-				TestAnnotation::class.findCompanionPropertiesAnnotated(TestNonCompanionObject::class) shouldBe emptyList()
+				TestAnnotation::class.findCompanionProperties(TestNonCompanionObject::class) shouldBe emptyList()
 			}
 		}
 	}
