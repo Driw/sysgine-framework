@@ -7,6 +7,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 
 class InterfaceReflectionTest : ShouldSpec() {
+
 	init {
 
 		beforeSpec { ReflectionProviderSetup.beforeSpec<InterfaceReflectionTest>() }
@@ -14,34 +15,34 @@ class InterfaceReflectionTest : ShouldSpec() {
 
 		context("find implementation") {
 			should("when the implementation doesn't have priority") {
-				TestInterface::class.findImplementation() shouldBe TestInterfaceImpl::class
+				InterfaceTest::class.findImplementation() shouldBe InterfaceTestImpl::class
 			}
 
 			should("when the implementation have priority") {
-				TestPriorityInterface::class.findImplementation() shouldBe TestPriorityInterfacePrioritized::class
+				PriorityInterfaceTest::class.findImplementation() shouldBe PriorityInterfaceTestPrioritized::class
 			}
 
 			should("when the implementation is missing") {
-				shouldThrow<MissingImplementationException> { TestInterfaceNotImplemented::class.findImplementation() }
+				shouldThrow<MissingImplementationException> { InterfaceNotImplementedTest::class.findImplementation() }
 					.should {
 						it.language shouldBe ReflectionMessages.MISSING_IMPLEMENTATION
 						it.parameters shouldNotBe null
-						it.parameters["target"] shouldBe TestInterfaceNotImplemented::class.java.name
+						it.parameters["target"] shouldBe InterfaceNotImplementedTest::class.java.name
 					}
 			}
 		}
 	}
+
+	private interface InterfaceTest
+	private interface InterfaceTestExtend : InterfaceTest
+	private enum class InterfaceTestEnum : InterfaceTest
+	private abstract class InterfaceTestAbstract : InterfaceTest
+	private class InterfaceTestImpl : InterfaceTest
+
+	private interface PriorityInterfaceTest
+	private class PriorityInterfaceTestNotPrioritized : PriorityInterfaceTest
+	@Priority(value = 1)
+	private class PriorityInterfaceTestPrioritized : PriorityInterfaceTest
+
+	private interface InterfaceNotImplementedTest
 }
-
-private interface TestInterface
-private interface TestInterfaceExtend : TestInterface
-private enum class TestInterfaceEnum : TestInterface
-private abstract class TestInterfaceAbstract : TestInterface
-private class TestInterfaceImpl : TestInterface
-
-private interface TestPriorityInterface
-private class TestPriorityInterfaceNotPrioritized : TestPriorityInterface
-@Priority(value = 1)
-private class TestPriorityInterfacePrioritized : TestPriorityInterface
-
-private interface TestInterfaceNotImplemented

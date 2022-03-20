@@ -21,7 +21,7 @@ class InstanceReflectionTest : ShouldSpec() {
 			}
 		}
 	}
-}
 
-private class EmptyConstructorTest
-private class NoEmptyConstructorTest(val arg: Any)
+	private class EmptyConstructorTest
+	private class NoEmptyConstructorTest(val arg: Any)
+}
