@@ -1,7 +1,7 @@
 package br.com.driw.sysgineframework.reflection
 
 import org.reflections.Reflections
-import java.util.Objects
+import org.reflections.scanners.Scanners
 
 object ReflectionProvider {
 
@@ -9,6 +9,8 @@ object ReflectionProvider {
 
 	fun reflection() = reflections
 	fun reflection(newPackage: String) =
-		(if (Objects.isNull(newPackage) || newPackage.isEmpty()) Reflections() else Reflections(newPackage))
-			.also { reflections = it }
+		newPackage.takeIf { it.isEmpty() }
+			?.let { Reflections() }
+			?: Reflections(newPackage, Scanners.values())
+				.also { reflections = it }
 }

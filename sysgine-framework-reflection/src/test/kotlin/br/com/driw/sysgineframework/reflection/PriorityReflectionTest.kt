@@ -26,12 +26,14 @@ class PriorityReflectionTest : ShouldSpec() {
 			}
 		}
 	}
+
+	private class TestA
+
+	@Priority(value = TEST_B_PRIORITY)
+	private class TestB
+
+	companion object {
+		private const val TEST_A_PRIORITY = 0
+		private const val TEST_B_PRIORITY = 1
+	}
 }
-
-private const val TEST_A_PRIORITY = 0
-private const val TEST_B_PRIORITY = 1
-
-private class TestA
-
-@Priority(value = TEST_B_PRIORITY)
-private class TestB
