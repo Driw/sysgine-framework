@@ -2,7 +2,7 @@ package br.com.driw.sysgineframework.reflection
 
 import br.com.driw.sysgine.fixture.FixtureProvider.random
 import io.kotest.core.spec.style.ShouldSpec
-import io.kotest.matchers.collections.shouldContainAll
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.shouldBe
 
 class AnnotationReflectionTest : ShouldSpec() {
@@ -18,7 +18,7 @@ class AnnotationReflectionTest : ShouldSpec() {
 			}
 
 			should("list any who is annotated or has a extension or implementation who has it") {
-				TestAnnotation::class.findTypesAnnotated() shouldContainAll listOf(
+				TestAnnotation::class.findTypesAnnotated() shouldContainExactlyInAnyOrder listOf(
 					ConcreteTest::class,
 					AnnotatedInterfaceTest::class,
 					ExtendedClassTest::class,
@@ -40,18 +40,37 @@ class AnnotationReflectionTest : ShouldSpec() {
 			}
 		}
 
-		context("find methods annotated") {
+		context("find functions annotated") {
 			should("list functions who is annotated by") {
 				TestNotAnnotated::class.findFunctionsAnnotated()
-					.map { it.name } shouldContainAll listOf("methodNotAnnotated", "staticMethodNotAnnotated")
+					.map { it.name } shouldContainExactlyInAnyOrder listOf("methodNotAnnotated", "companionMethodNotAnnotated")
 				TestAnnotation::class.findFunctionsAnnotated()
-					.map { it.name } shouldContainAll listOf("methodString", "methodInt")
+					.map { it.name } shouldContainExactlyInAnyOrder listOf("methodString", "methodInt")
 			}
 		}
 	}
 
-	private annotation class TestNotAnnotated
-	private annotation class TestAnnotation
+		context("find properties annotated") {
+			should("list properties who is annotated by") {
+				TestNotAnnotated::class.findPropertiesAnnotated(TestProperty::class)
+					.map { it.name } shouldContainExactlyInAnyOrder listOf("nonRequiredProperty")
+				TestAnnotation::class.findPropertiesAnnotated(TestProperty::class)
+					.map { it.name } shouldContainExactlyInAnyOrder listOf("nonPrivateRequiredProperty")
+				TestNotAnnotated::class.findConstructorPropertiesAnnotated(TestProperty::class)
+					.map { it.name } shouldContainExactlyInAnyOrder listOf("requiredProperty")
+				TestAnnotation::class.findConstructorPropertiesAnnotated(TestProperty::class)
+					.map { it.name } shouldContainExactlyInAnyOrder listOf("requiredPrivateProperty")
+				TestNotAnnotated::class.findCompanionPropertiesAnnotated(TestProperty::class)
+					.map { it.name } shouldContainExactlyInAnyOrder listOf("companionObjectProperty")
+				TestAnnotation::class.findCompanionPropertiesAnnotated(TestProperty::class)
+					.map { it.name } shouldContainExactlyInAnyOrder listOf("privateCompanionObjectProperty")
+				TestAnnotation::class.findCompanionPropertiesAnnotated(TestNonCompanionObject::class) shouldBe emptyList()
+			}
+		}
+	}
+
+	annotation class TestNotAnnotated
+	annotation class TestAnnotation
 
 	@TestAnnotation
 	private interface AnnotatedInterfaceTest
@@ -68,7 +87,22 @@ class AnnotationReflectionTest : ShouldSpec() {
 		@TestAnnotation fun methodInt(): Int = random()
 
 		companion object {
-			@TestNotAnnotated fun staticMethodNotAnnotated(): String = random()
+			@TestNotAnnotated fun companionMethodNotAnnotated(): String = random()
 		}
 	}
+
+	private class TestProperty(
+		@TestNotAnnotated val requiredProperty: Boolean = random(),
+		@TestAnnotation private val requiredPrivateProperty: String = random()
+	) {
+		@TestNotAnnotated val nonRequiredProperty: Int = random()
+		@TestAnnotation private val nonPrivateRequiredProperty: Double = random()
+
+		companion object {
+			@TestNotAnnotated val companionObjectProperty: String = random()
+			@TestAnnotation val privateCompanionObjectProperty: String = random()
+		}
+	}
+
+	private class TestNonCompanionObject
 }
