@@ -1,4 +1,4 @@
-package br.com.driw.sysgineframework.reflection
+package br.com.driw.sysgineframework.reflection.utils
 
 import java.lang.reflect.Modifier
 import kotlin.reflect.KClass

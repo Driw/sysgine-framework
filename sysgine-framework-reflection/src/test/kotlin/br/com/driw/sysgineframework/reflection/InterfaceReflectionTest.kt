@@ -2,9 +2,7 @@ package br.com.driw.sysgineframework.reflection
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.ShouldSpec
-import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
 
 class InterfaceReflectionTest : ShouldSpec() {
 
@@ -23,12 +21,9 @@ class InterfaceReflectionTest : ShouldSpec() {
 			}
 
 			should("when the implementation is missing") {
-				shouldThrow<MissingImplementationException> { InterfaceNotImplementedTest::class.findImplementation() }
-					.should {
-						it.language shouldBe ReflectionMessages.MISSING_IMPLEMENTATION
-						it.parameters shouldNotBe null
-						it.parameters["target"] shouldBe InterfaceNotImplementedTest::class.java.name
-					}
+				val expected = MissingImplementationException(InterfaceNotImplementedTest::class)
+
+				shouldThrow<MissingImplementationException> { InterfaceNotImplementedTest::class.findImplementation() } shouldBe expected
 			}
 		}
 	}

@@ -1,6 +1,8 @@
 package br.com.driw.sysgineframework.reflection
 
 import br.com.driw.sysgine.common.utils.has
+import br.com.driw.sysgineframework.reflection.utils.AnyKClass
+import br.com.driw.sysgineframework.reflection.utils.AnyKClassList
 import kotlin.reflect.KClass
 import kotlin.reflect.KFunction
 import kotlin.reflect.KParameter
