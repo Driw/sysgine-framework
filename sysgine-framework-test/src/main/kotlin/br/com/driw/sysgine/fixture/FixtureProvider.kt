@@ -2,9 +2,7 @@ package br.com.driw.sysgine.fixture
 
 import org.jeasy.random.EasyRandom
 import org.jeasy.random.EasyRandomParameters
-import kotlin.collections.associateWith
-import kotlin.collections.toMap
-import kotlin.jvm.java
+import kotlin.streams.toList
 
 object FixtureProvider {
 
