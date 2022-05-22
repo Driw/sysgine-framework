@@ -15,15 +15,15 @@
 		<maven.compiler.target>16</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- LANGUAGE -->
-		<java.version>16.0.1</java.version>
-		<kotlin.version>1.6.20-RC</kotlin.version>
+		<java.version>16</java.version>
+		<kotlin.version>1.6.21</kotlin.version>
 		<!-- OTHERS -->
 		<jackson.version>2.13.1</jackson.version>
 		<slf4j.version>2.0.0-alpha6</slf4j.version>
 		<sysgine.version>0.1.0</sysgine.version>
 		<!-- TESTS -->
 		<junit.jupiter.version>5.8.2</junit.jupiter.version>
-		<kotest.version>5.1.0</kotest.version>
+		<kotest.version>5.3.0</kotest.version>
 	</properties>
 
 	<name>Sysgine Framework</name>
@@ -52,17 +52,12 @@
 
 			<dependency>
 				<groupId>org.jetbrains.kotlin</groupId>
-				<artifactId>kotlin-stdlib</artifactId>
+				<artifactId>kotlin-stdlib-jdk8</artifactId>
 				<version>${kotlin.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.jetbrains.kotlin</groupId>
 				<artifactId>kotlin-reflect</artifactId>
-				<version>${kotlin.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.jetbrains.kotlin</groupId>
-				<artifactId>kotlin-stdlib-jdk8</artifactId>
 				<version>${kotlin.version}</version>
 			</dependency>
 			<dependency>
@@ -91,7 +86,7 @@
 		<dependency>
 			<groupId>io.gitlab.arturbosch.detekt</groupId>
 			<artifactId>detekt-formatting</artifactId>
-			<version>1.19.0</version>
+			<version>1.20.0</version>
 			<scope>runtime</scope>
 		</dependency>
 

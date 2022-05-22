@@ -17,4 +17,13 @@ class IterableInlineTest : ShouldSpec({
 			list.has { it == 4 } shouldBe false
 		}
 	}
+
+	context("has not") {
+		val list = listOf(1, 2, 3)
+
+		should("list has not item condition") {
+			list.hasNot { it == 0 } shouldBe true
+			list.hasNot { it == 4 } shouldBe true
+		}
+	}
 })
