@@ -16,14 +16,17 @@
 	<dependencies>
 		<!-- KOTLIN -->
 
-		<dependency>
-			<groupId>org.jetbrains.kotlin</groupId>
-			<artifactId>kotlin-reflect</artifactId>
-		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk8 -->
 		<dependency>
 			<groupId>org.jetbrains.kotlin</groupId>
 			<artifactId>kotlin-stdlib-jdk8</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-reflect -->
+		<dependency>
+			<groupId>org.jetbrains.kotlin</groupId>
+			<artifactId>kotlin-reflect</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-test -->
 		<dependency>
 			<groupId>org.jetbrains.kotlin</groupId>
 			<artifactId>kotlin-test</artifactId>
@@ -35,13 +38,13 @@
 		<dependency>
 			<groupId>br.com.driw.sysgine</groupId>
 			<artifactId>sysgine-framework-test</artifactId>
-			<version>0.1.0</version>
+			<version>${sysgine.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>br.com.driw.sysgine</groupId>
 			<artifactId>sysgine-framework-common</artifactId>
-			<version>0.1.0</version>
+			<version>${sysgine.version}</version>
 		</dependency>
 
 		<!-- UTILS -->
