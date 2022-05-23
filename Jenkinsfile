@@ -14,6 +14,7 @@ pipeline {
 
 	tools {
 		maven "maven"
+		jdk "openjdk16"
 	}
 
 	stages {
