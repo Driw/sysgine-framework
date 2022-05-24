@@ -7,13 +7,6 @@ def modules() {
 	]
 	directories
 }
-def junitModules() {
-	def  junitDirectories = [
-		"sysgine-framework-common",
-		"sysgine-framework-reflection"
-	]
-	junitDirectories
-}
 def mavenProjects = "--projects sysgine-framework-test,sysgine-framework-common,sysgine-framework-reflection"
 
 pipeline {
@@ -21,10 +14,24 @@ pipeline {
 
 	tools {
 		maven "maven"
-		jdk "openjdk16"
 	}
 
+    options {
+        timeout(time: 15, unit: 'MINUTES')
+    }
+
 	stages {
+        stage('Initialization') {
+            steps {
+                echo "Building Branch: ${env.BRANCH_NAME}"
+                echo "Using PATH = ${env.PATH}"
+				echo "M2_HOME = ${M2_HOME}"
+				echo "JAVA_HOME = ${JAVA_HOME}"
+				sh "java -version"
+				sh "javac -version"
+            }
+        }
+
 		stage('Checkout') {
 			steps {
 				git branch: "${env.BRANCH_NAME}", url: "${env.GIT_URL}"
@@ -45,15 +52,17 @@ pipeline {
 					sh "mvn test -Dmaven.test.redirectTestOutputToFile=true -e ${mavenProjects}"
 				}
 			}
+			/*
 			post {
 				always {
 					script {
-						for (module in junitModules()) {
-							junit "${module}/target/surefire-reports/*.xml"
+						for (module in modules()) {
+                   			junit(testResults: "${module}/target/surefire-reports/*.xml", allowEmptyResults: true)
 						}
 					}
 				}
 			}
+			*/
 		}
 
 		stage('SonarQube Scan & Quality Gate') {

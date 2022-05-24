@@ -18,12 +18,13 @@
 		<!-- LANGUAGE -->
 		<java.version>16</java.version>
 		<kotlin.version>1.6.21</kotlin.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- OTHERS -->
 		<jackson.version>2.13.1</jackson.version>
 		<slf4j.version>2.0.0-alpha6</slf4j.version>
 		<sysgine.version>0.1.0</sysgine.version>
 		<!-- TESTS -->
-		<junit.jupiter.version>5.8.2</junit.jupiter.version>
+		<junit-jupiter.version>5.8.2</junit-jupiter.version>
 		<kotest.version>5.3.0</kotest.version>
 		<jacoco.version>0.8.8</jacoco.version>
 	</properties>
@@ -52,6 +53,12 @@
 		<dependencies>
 			<!-- KOTLIN -->
 
+			<!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib -->
+			<dependency>
+				<groupId>org.jetbrains.kotlin</groupId>
+				<artifactId>kotlin-stdlib</artifactId>
+				<version>${kotlin.version}</version>
+			</dependency>
 			<!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk8 -->
 			<dependency>
 				<groupId>org.jetbrains.kotlin</groupId>
@@ -97,11 +104,18 @@
 
 		<!-- TEST DEPENDENCIES -->
 
+		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>${junit-jupiter.version}</version>
+			<scope>test</scope>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
-			<version>${junit.jupiter.version}</version>
+			<version>${junit-jupiter.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/io.kotest/kotest-assertions-core-jvm -->
@@ -121,6 +135,7 @@
 	</dependencies>
 
 	<build>
+
 		<!-- PLUGIN MANAGEMENT -->
 
 		<pluginManagement>
@@ -130,6 +145,18 @@
 					<groupId>org.jetbrains.kotlin</groupId>
 					<artifactId>kotlin-maven-plugin</artifactId>
 					<version>${kotlin.version}</version>
+				</plugin>
+				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.22.2</version>
+				</plugin>
+				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.10.1</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
