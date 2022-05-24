@@ -1,11 +1,18 @@
 @NonCPS
 def modules() {
-	def  dirsl = [
+	def  directories = [
 		"sysgine-framework-test",
 		"sysgine-framework-common",
 		"sysgine-framework-reflection"
 	]
-	dirsl
+	directories
+}
+def junitModules() {
+	def  junitDirectories = [
+		"sysgine-framework-common",
+		"sysgine-framework-reflection"
+	]
+	junitDirectories
 }
 def mavenProjects = "--projects sysgine-framework-test,sysgine-framework-common,sysgine-framework-reflection"
 
@@ -41,7 +48,7 @@ pipeline {
 			post {
 				always {
 					script {
-						for (module in modules()) {
+						for (module in junitModules()) {
 							junit "${module}/target/surefire-reports/*.xml"
 						}
 					}
@@ -52,7 +59,7 @@ pipeline {
 		stage('SonarQube Scan & Quality Gate') {
 			steps {
 				script {
-					for (module in modules()) {
+					for (module in junitModules()) {
 						dir("${env.WORKSPACE}/${module}") {
 							withSonarQubeEnv('sonarqube-server') {
 								sh "mvn sonar:sonar -e"
